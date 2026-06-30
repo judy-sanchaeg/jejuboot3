@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>세움 긴급주거지원 모금 캠페인 | 아이에게 집이 필요합니다</title>
+  <meta name="description" content="수용자 자녀가 길을 잃지 않도록. 세움의 긴급주거지원 사업비 모금 캠페인에 함께해 주세요." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:    #E84545;
+      --orange: #FF6B35;
+      --warm:   #FFD23F;
+      --night:  #0f0f1a;
+      --dark:   #1a1a2e;
+      --card:   #22223b;
+      --muted:  rgba(255,255,255,0.55);
+      --white:  #ffffff;
+      --radius: 18px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
+      background: var(--night);
+      color: var(--white);
+      line-height: 1.65;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(15,15,26,0.85);
+      backdrop-filter: blur(14px);
+      padding: 14px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav-logo-text {
+      font-size: 1.2rem; font-weight: 900; color: var(--white);
+    }
+    .nav-logo-badge {
+      font-size: 0.72rem; font-weight: 700; color: var(--red);
+      border: 1.5px solid var(--red);
+      padding: 3px 8px; border-radius: 999px;
+      letter-spacing: 0.5px;
+    }
+    .nav-cta {
+      background: var(--red);
+      color: var(--white);
+      padding: 9px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 800;
+      transition: all 0.2s;
+      box-shadow: 0 0 18px rgba(232,69,69,0.4);
+    }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 4px 24px rgba(232,69,69,0.55); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 140px 24px 100px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 0%, rgba(232,69,69,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 50% at 80% 80%, rgba(255,107,53,0.12) 0%, transparent 60%),
+        var(--night);
+    }
+    .hero-glow {
+      position: absolute;
+      width: 500px; height: 500px;
+      background: rgba(232,69,69,0.08);
+      border-radius: 50%;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      filter: blur(80px);
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 1; max-width: 760px; }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(232,69,69,0.15);
+      border: 1px solid rgba(232,69,69,0.4);
+      color: #ff8a8a;
+      padding: 7px 16px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 28px;
+      letter-spacing: 1px;
+    }
+    .pulse-dot {
+      width: 8px; height: 8px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 7vw, 4rem);
+      font-weight: 900;
+      line-height: 1.2;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--red), var(--orange));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: var(--muted);
+      margin-bottom: 48px;
+      max-width: 560px;
+      margin-left: auto; margin-right: auto;
+      line-height: 1.8;
+    }
+
+    /* PROGRESS */
+    .progress-box {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      max-width: 580px;
+      margin: 0 auto 36px;
+      text-align: left;
+    }
+    .progress-numbers {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 14px;
+    }
+    .current-amount {
+      font-size: 1.9rem; font-weight: 900; color: var(--white);
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+    .current-amount span { font-size: 1rem; font-weight: 600; color: var(--muted); }
+    .goal-label { font-size: 0.85rem; color: var(--muted); text-align: right; }
+    .goal-label strong { color: var(--white); display: block; font-size: 1rem; }
+    .progress-bar-bg {
+      background: rgba(255,255,255,0.1);
+      border-radius: 999px;
+      height: 10px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--red), var(--orange));
+      border-radius: 999px;
+      width: 0%;
+      transition: width 1.8s cubic-bezier(0.25, 1, 0.5, 1);
+      box-shadow: 0 0 12px rgba(232,69,69,0.6);
+    }
+    .progress-meta {
+      display: flex; justify-content: space-between;
+      font-size: 0.82rem; color: var(--muted);
+    }
+    .progress-meta .pct { color: var(--orange); font-weight: 800; }
+
+    /* COUNTDOWN */
+    .countdown {
+      display: flex; gap: 16px; justify-content: center;
+      margin-bottom: 36px;
+    }
+    .cd-item {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 14px 20px;
+      text-align: center;
+      min-width: 72px;
+    }
+    .cd-num {
+      font-size: 1.8rem; font-weight: 900; color: var(--white);
+      letter-spacing: -1px; line-height: 1;
+      display: block;
+    }
+    .cd-label { font-size: 0.72rem; color: var(--muted); margin-top: 4px; }
+
+    .hero-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--red), var(--orange));
+      color: var(--white);
+      padding: 18px 48px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 900;
+      box-shadow: 0 8px 32px rgba(232,69,69,0.4);
+      transition: all 0.25s;
+      letter-spacing: -0.3px;
+    }
+    .hero-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(232,69,69,0.55); }
+
+    /* ── STORY ── */
+    .story {
+      padding: 100px 24px;
+      background: var(--dark);
+    }
+    .section-inner { max-width: 900px; margin: 0 auto; }
+    .section-tag {
+      display: inline-block;
+      color: var(--orange);
+      font-size: 0.8rem; font-weight: 800;
+      letter-spacing: 2px;
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 900; letter-spacing: -1.5px;
+      margin-bottom: 20px;
+      line-height: 1.25;
+    }
+    .section-body {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 640px;
+      line-height: 1.9;
+    }
+
+    .story-quote {
+      margin: 48px 0;
+      padding: 32px 36px;
+      background: rgba(232,69,69,0.08);
+      border-left: 4px solid var(--red);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    .story-quote p {
+      font-size: 1.2rem;
+      font-weight: 700;
+      line-height: 1.7;
+      color: var(--white);
+    }
+    .story-quote cite {
+      display: block;
+      margin-top: 14px;
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-style: normal;
+    }
+
+    .story-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .story-card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .story-card:hover { transform: translateY(-4px); border-color: rgba(232,69,69,0.35); }
+    .story-card .s-emoji { font-size: 2rem; margin-bottom: 14px; }
+    .story-card h3 { font-size: 1rem; font-weight: 800; margin-bottom: 8px; }
+    .story-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.75; }
+
+    /* ── BUDGET ── */
+    .budget {
+      padding: 100px 24px;
+      background: var(--night);
+    }
+    .budget-list {
+      margin-top: 48px;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .budget-item {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius);
+      padding: 22px 28px;
+      display: flex; align-items: center; gap: 20px;
+    }
+    .budget-icon { font-size: 1.8rem; flex-shrink: 0; }
+    .budget-info { flex: 1; }
+    .budget-info h3 { font-size: 0.95rem; font-weight: 800; margin-bottom: 4px; }
+    .budget-info p { font-size: 0.82rem; color: var(--muted); }
+    .budget-amount {
+      font-size: 1.15rem; font-weight: 900;
+      color: var(--orange);
+      white-space: nowrap;
+      letter-spacing: -0.5px;
+    }
+    .budget-bar-wrap {
+      margin-top: 10px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 999px;
+      height: 5px;
+      overflow: hidden;
+    }
+    .budget-bar { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--red), var(--orange)); }
+
+    /* ── DONATE ── */
+    .donate-section {
+      padding: 100px 24px;
+      background: var(--dark);
+    }
+    .amount-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 36px 0 28px;
+    }
+    .amount-btn {
+      background: rgba(255,255,255,0.05);
+      border: 1.5px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius);
+      padding: 22px 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+      color: var(--white);
+    }
+    .amount-btn:hover { border-color: var(--orange); background: rgba(255,107,53,0.08); }
+    .amount-btn.active {
+      border-color: var(--red);
+      background: rgba(232,69,69,0.12);
+      box-shadow: 0 0 0 3px rgba(232,69,69,0.25);
+    }
+    .amount-btn .amt {
+      font-size: 1.35rem; font-weight: 900;
+      display: block; margin-bottom: 5px;
+    }
+    .amount-btn.active .amt { color: #ff8a8a; }
+    .amount-btn .amt-sub { font-size: 0.75rem; color: var(--muted); }
+
+    .selected-display {
+      text-align: center; font-size: 0.95rem; color: var(--muted);
+      min-height: 28px; margin-bottom: 28px;
+    }
+    .selected-display strong { color: var(--orange); font-size: 1.3rem; font-weight: 900; }
+
+    /* Account box */
+    .account-box {
+      background: rgba(255,255,255,0.04);
+      border: 1.5px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      padding: 30px;
+    }
+    .account-box h3 {
+      font-size: 0.78rem; font-weight: 800;
+      color: var(--orange); letter-spacing: 1.5px;
+      margin-bottom: 20px;
+    }
+    .account-row {
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    }
+    .bank-label { font-size: 0.85rem; color: var(--muted); margin-bottom: 5px; }
+    .account-number { font-size: 1.6rem; font-weight: 900; letter-spacing: 1px; }
+    .account-holder { font-size: 0.85rem; color: var(--muted); margin-top: 5px; }
+    .copy-btn {
+      background: linear-gradient(135deg, var(--red), var(--orange));
+      color: var(--white);
+      border: none;
+      border-radius: 999px;
+      padding: 13px 28px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s;
+      white-space: nowrap;
+      box-shadow: 0 4px 18px rgba(232,69,69,0.35);
+    }
+    .copy-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(232,69,69,0.5); }
+    .copy-btn.copied { background: linear-gradient(135deg, #22c55e, #16a34a); box-shadow: 0 4px 18px rgba(34,197,94,0.35); }
+
+    .donate-note {
+      margin-top: 16px;
+      padding: 14px 18px;
+      background: rgba(255,210,63,0.08);
+      border: 1px solid rgba(255,210,63,0.2);
+      border-radius: 10px;
+      font-size: 0.83rem;
+      color: rgba(255,210,63,0.85);
+      display: flex; gap: 8px;
+    }
+
+    /* ── URGENCY BANNER ── */
+    .urgency {
+      padding: 72px 24px;
+      background: linear-gradient(135deg, #1a0a0a 0%, #2a0d0d 100%);
+      text-align: center;
+      border-top: 1px solid rgba(232,69,69,0.2);
+      border-bottom: 1px solid rgba(232,69,69,0.2);
+    }
+    .urgency p { font-size: 0.9rem; color: rgba(255,150,150,0.8); letter-spacing: 2px; margin-bottom: 14px; font-weight: 700; }
+    .urgency h2 { font-size: clamp(1.5rem, 4vw, 2.4rem); font-weight: 900; letter-spacing: -1px; line-height: 1.4; margin-bottom: 24px; }
+    .urgency h2 em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--red), var(--orange));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .urgency a {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--red), var(--orange));
+      color: var(--white);
+      padding: 16px 40px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 900;
+      box-shadow: 0 6px 28px rgba(232,69,69,0.45);
+      transition: all 0.25s;
+    }
+    .urgency a:hover { transform: translateY(-3px); box-shadow: 0 10px 36px rgba(232,69,69,0.6); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #080810;
+      padding: 48px 24px 32px;
+      text-align: center;
+    }
+    .footer-logo { font-size: 1.5rem; font-weight: 900; margin-bottom: 10px; }
+    .footer-info { font-size: 0.8rem; color: var(--muted); line-height: 2; margin-bottom: 24px; }
+    .footer-copy {
+      font-size: 0.75rem; color: rgba(255,255,255,0.2);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 20px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      .amount-grid { grid-template-columns: 1fr; }
+      .account-row { flex-direction: column; align-items: flex-start; }
+      .copy-btn { width: 100%; }
+      .countdown { gap: 8px; }
+      .cd-item { min-width: 60px; padding: 12px 14px; }
+      .cd-num { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <span class="nav-logo-text">세움</span>
+    <span class="nav-logo-badge">모금 캠페인</span>
+  </div>
+  <a href="#donate" class="nav-cta">지금 후원하기</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="pulse-dot"></div>
+      긴급주거지원 사업비 모금 캠페인
+    </div>
+    <h1>
+      아이에게<br><em>집이 필요합니다</em>
+    </h1>
+    <p class="hero-sub">
+      부모의 구금으로 하루아침에 집을 잃는 아이들이 있습니다.<br>
+      세움은 그 아이들이 안전한 공간에서 다시 일어설 수 있도록<br>
+      긴급주거지원 사업을 운영합니다.
+    </p>
+
+    <!-- PROGRESS -->
+    <div class="progress-box">
+      <div class="progress-numbers">
+        <div>
+          <div style="font-size:0.8rem;color:var(--muted);margin-bottom:4px;">현재 모금액</div>
+          <div class="current-amount" id="currentAmt">0 <span>원</span></div>
+        </div>
+        <div class="goal-label">
+          목표 금액
+          <strong>1,000만원</strong>
+        </div>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progressFill"></div>
+      </div>
+      <div class="progress-meta">
+        <span><span class="pct" id="pctText">0%</span> 달성</span>
+        <span>목표 1,000만원</span>
+      </div>
+    </div>
+
+    <!-- COUNTDOWN -->
+    <div class="countdown" id="countdown">
+      <div class="cd-item"><span class="cd-num" id="cd-d">--</span><span class="cd-label">일</span></div>
+      <div class="cd-item"><span class="cd-num" id="cd-h">--</span><span class="cd-label">시간</span></div>
+      <div class="cd-item"><span class="cd-num" id="cd-m">--</span><span class="cd-label">분</span></div>
+      <div class="cd-item"><span class="cd-num" id="cd-s">--</span><span class="cd-label">초</span></div>
+    </div>
+    <div style="font-size:0.82rem;color:var(--muted);margin-bottom:32px;margin-top:-8px;">마감: 2026년 8월 31일까지</div>
+
+    <a href="#donate" class="hero-btn">지금 후원하기 →</a>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story" id="story">
+  <div class="section-inner">
+    <div class="section-tag">왜 지금인가</div>
+    <h2 class="section-title">부모의 구금,<br>아이에게는 모든 것의 상실</h2>
+    <p class="section-body">
+      부모 중 한 명이 구금되는 순간, 아이는 단순히 부모를 잃는 것이 아닙니다. 소득이 끊기고 집세를 내지 못해 거주지를 잃는 일이 빈번하게 발생합니다. 갑작스러운 주거 위기는 학업 중단, 심리적 불안, 사회적 고립으로 이어지며 아이의 삶 전체를 흔들어놓습니다.
+    </p>
+    <div class="story-quote">
+      <p>"학교도 가고 싶은데, 이사를 너무 자주 다녀서 친구를 사귈 수가 없어요."</p>
+      <cite>— 세움이 만난 수용자 자녀 (초등학교 5학년)</cite>
+    </div>
+    <p class="section-body">
+      세움은 이 아이들이 안전하고 안정된 공간에서 자랄 수 있도록 긴급주거지원 사업을 운영하고 있습니다. 하지만 늘어나는 지원 수요에 비해 사업비가 턱없이 부족합니다. 여러분의 후원이 지금 당장 필요합니다.
+    </p>
+
+    <div class="story-cards">
+      <div class="story-card">
+        <div class="s-emoji">🏚️</div>
+        <h3>주거 위기 가정 급증</h3>
+        <p>구금 직후 3개월 내 주거 불안정을 겪는 자녀 가정이 매년 증가하고 있습니다. 긴급 개입 없이는 노숙 위기로 이어질 수 있습니다.</p>
+      </div>
+      <div class="story-card">
+        <div class="s-emoji">🔑</div>
+        <h3>임시 주거 공간 마련</h3>
+        <p>세움은 위기 가정에 임시 거주 공간을 지원하고, 안정적인 장기 주거로 연계될 때까지 동반자로 함께합니다.</p>
+      </div>
+      <div class="story-card">
+        <div class="s-emoji">📦</div>
+        <h3>생활 물품 긴급 지원</h3>
+        <p>새로운 공간에서 생활을 시작할 수 있도록 생필품, 가전제품, 학용품 등 기초 생활 물품을 함께 지원합니다.</p>
+      </div>
+      <div class="story-card">
+        <div class="s-emoji">🧭</div>
+        <h3>사례 관리 및 연계</h3>
+        <p>주거 지원에서 그치지 않고 복지 서비스, 심리 상담, 공공 지원 연계까지 통합적으로 관리합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUDGET -->
+<section class="budget">
+  <div class="section-inner">
+    <div class="section-tag">모금금 사용 계획</div>
+    <h2 class="section-title">1,000만원,<br>이렇게 사용됩니다</h2>
+    <p style="color:var(--muted);font-size:0.95rem;margin-top:12px;">
+      모금된 후원금은 투명하게 공개되며, 긴급주거지원 사업에만 사용됩니다.
+    </p>
+    <div class="budget-list">
+      <div class="budget-item">
+        <div class="budget-icon">🏠</div>
+        <div class="budget-info">
+          <h3>임시 주거비 지원</h3>
+          <p>월세·보증금 긴급 지원 (최대 3가정)</p>
+          <div class="budget-bar-wrap"><div class="budget-bar" style="width:50%"></div></div>
+        </div>
+        <div class="budget-amount">500만원</div>
+      </div>
+      <div class="budget-item">
+        <div class="budget-icon">🛋️</div>
+        <div class="budget-info">
+          <h3>기초 생활 물품 지원</h3>
+          <p>가전·가구·생필품·학용품 구입</p>
+          <div class="budget-bar-wrap"><div class="budget-bar" style="width:25%"></div></div>
+        </div>
+        <div class="budget-amount">250만원</div>
+      </div>
+      <div class="budget-item">
+        <div class="budget-icon">🤝</div>
+        <div class="budget-info">
+          <h3>사례 관리 및 연계 서비스</h3>
+          <p>전문 사례관리사 투입 및 기관 연계비</p>
+          <div class="budget-bar-wrap"><div class="budget-bar" style="width:15%"></div></div>
+        </div>
+        <div class="budget-amount">150만원</div>
+      </div>
+      <div class="budget-item">
+        <div class="budget-icon">🧠</div>
+        <div class="budget-info">
+          <h3>심리 정서 지원</h3>
+          <p>심리 상담 및 아동 정서 회복 프로그램</p>
+          <div class="budget-bar-wrap"><div class="budget-bar" style="width:10%"></div></div>
+        </div>
+        <div class="budget-amount">100만원</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- URGENCY BANNER -->
+<div class="urgency">
+  <p>TIME IS RUNNING OUT</p>
+  <h2>
+    2026년 8월 31일까지<br>
+    <em>단 하나의 가정</em>이라도 더 지킬 수 있도록
+  </h2>
+  <a href="#donate">지금 후원에 참여하기 →</a>
+</div>
+
+<!-- DONATE -->
+<section class="donate-section" id="donate">
+  <div class="section-inner">
+    <div class="section-tag">후원하기</div>
+    <h2 class="section-title">아이의 집을<br>함께 지켜주세요</h2>
+    <p style="color:var(--muted);font-size:0.95rem;margin-top:12px;">
+      작은 후원이 모여 아이에게 안전한 집이 됩니다.
+    </p>
+
+    <div class="amount-grid">
+      <button class="amount-btn" onclick="selectAmount(this, 10000)">
+        <span class="amt">1만원</span>
+        <span class="amt-sub">생필품 1종 지원</span>
+      </button>
+      <button class="amount-btn" onclick="selectAmount(this, 30000)">
+        <span class="amt">3만원</span>
+        <span class="amt-sub">학용품 세트 지원</span>
+      </button>
+      <button class="amount-btn" onclick="selectAmount(this, 50000)">
+        <span class="amt">5만원</span>
+        <span class="amt-sub">월 생활비 1/10 지원</span>
+      </button>
+    </div>
+
+    <div class="selected-display" id="selectedDisplay">금액을 선택해 주세요</div>
+
+    <div class="account-box">
+      <h3>후원 계좌 안내</h3>
+      <div class="account-row">
+        <div>
+          <div class="bank-label">KEB 하나은행</div>
+          <div class="account-number">164-890081-53604</div>
+          <div class="account-holder">예금주: 세움</div>
+        </div>
+        <button class="copy-btn" id="copyBtn" onclick="copyAccount()">계좌번호 복사</button>
+      </div>
+    </div>
+
+    <div class="donate-note">
+      <span>📌</span>
+      <span>이체 시 입금자명에 성함 또는 연락처를 남겨주시면 후원 확인 및 영수증 발급에 도움이 됩니다.</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">세움</div>
+  <div class="footer-info">
+    아동복지 전문단체 세움 · 설립 2015년<br>
+    수용자 자녀와 가족을 세상의 중심에 세우고 함께 걸어가는 곳<br>
+    후원 문의: <a href="mailto:info@seum.or.kr" style="color:rgba(255,255,255,0.5)">info@seum.or.kr</a>
+  </div>
+  <div class="footer-copy">© 2026 세움. All rights reserved.</div>
+</footer>
+
+<script>
+  // ── PROGRESS BAR ANIMATION ──
+  // 현재 모금액을 여기서 수정하세요 (단위: 원)
+  const CURRENT_AMOUNT = 0;
+  const GOAL_AMOUNT = 10000000;
+
+  window.addEventListener('load', () => {
+    const pct = Math.min((CURRENT_AMOUNT / GOAL_AMOUNT) * 100, 100);
+    setTimeout(() => {
+      document.getElementById('progressFill').style.width = pct + '%';
+    }, 400);
+    document.getElementById('pctText').textContent = pct.toFixed(1) + '%';
+    document.getElementById('currentAmt').innerHTML =
+      CURRENT_AMOUNT.toLocaleString('ko-KR') + ' <span>원</span>';
+  });
+
+  // ── COUNTDOWN ──
+  const DEADLINE = new Date('2026-08-31T23:59:59');
+
+  function updateCountdown() {
+    const now = new Date();
+    const diff = DEADLINE - now;
+    if (diff <= 0) {
+      document.getElementById('countdown').innerHTML = '<div style="color:var(--red);font-weight:900;font-size:1.1rem;">캠페인이 종료되었습니다</div>';
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    document.getElementById('cd-d').textContent = String(d).padStart(2, '0');
+    document.getElementById('cd-h').textContent = String(h).padStart(2, '0');
+    document.getElementById('cd-m').textContent = String(m).padStart(2, '0');
+    document.getElementById('cd-s').textContent = String(s).padStart(2, '0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // ── AMOUNT SELECT ──
+  function selectAmount(btn, amount) {
+    document.querySelectorAll('.amount-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('selectedDisplay').innerHTML =
+      '선택하신 후원 금액: <strong>' + amount.toLocaleString('ko-KR') + '원</strong>';
+  }
+
+  // ── COPY ACCOUNT ──
+  function copyAccount() {
+    const account = '164-890081-53604';
+    const btn = document.getElementById('copyBtn');
+    const done = () => {
+      btn.textContent = '✓ 복사 완료!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = '계좌번호 복사';
+        btn.classList.remove('copied');
+      }, 2500);
+    };
+    navigator.clipboard?.writeText(account).then(done).catch(() => {
+      const el = document.createElement('textarea');
+      el.value = account; document.body.appendChild(el);
+      el.select(); document.execCommand('copy');
+      document.body.removeChild(el); done();
+    });
+  }
+</script>
+</body>
+</html>
